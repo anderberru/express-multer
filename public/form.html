@@ -3,10 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+        window.onload = function () {
+            
+            document.getElementById("formu").onsubmit = function () {
+               fetch('/profile', {
+                   method: 'POST',
+                   body:JSON.stringify({
+                       name: document.getElementById("name").value,
+                       file: document.getElementById("file").value,
+                   }),
+               }).then(function (response) {
+                   return response.json();
+               }).then(function (data) {
+                   console.log(data);
+               });
+                return false;
+            
+            }
+        }
+    </script>
 </head>
 <body>
-<form action="/profile" method="post" enctype="multipart/form-data">
-    <input type="file" name="avatar"/>
+<form  id="formu" action="/profile" method="post" enctype="multipart/form-data">
+    Izena: <input type="text" id="name" name="name" placeholder="Sartu zure izena"> <br>
+    <input type="file" id="file" name="avatar"/>
     <input type="submit">
 </form>
 </body>
