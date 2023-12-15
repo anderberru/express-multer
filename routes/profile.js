@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const multer  = require('multer')
+var url = require('url');
 //const upload = multer({ dest: 'uploads/' })
 
 const storage = multer.diskStorage({
@@ -20,12 +21,14 @@ function fileFilter (req, file, cb) {
 
     // The function should call `cb` with a boolean
     // to indicate if the file should be accepted
+    console.log(file)
     if (file.originalname.split('.')[1] === "png" || file.originalname.split('.')[1] === "jpg"){
         // To reject this file pass `false`, like so:
+        
         cb(null, true)
     } else {
         // To accept the file pass `true`, like so:
-        cb(new Error('Error: File must be a png'), false)
+        cb(new Error('Error: File must be a png or jpg'), false)
     }
   
     // You can always pass an error if something goes wrong:
@@ -41,10 +44,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', upload.single('avatar'), function (req, res, next) {
-    console.log(req.file)
+    
     // req.body will hold the text fields, if there were any
-    res.send("Jasota")
+    //res.send("Jasota")
+    var fullUrl = url.format({protocol: req.protocol, host: req.get('host'), pathname: "/" + req.file.destination + req.file.filename})
+    //var fullUrl = req.protocol + '://' + req.get('host') + "/" + req.file.destination + req.file.filename;
+    let mezua = "Kaixo " + req.body.name + ": " + fullUrl
+    res.json({message : mezua})
+    
 })
+
 
 
 module.exports = router;
