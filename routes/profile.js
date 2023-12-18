@@ -36,7 +36,7 @@ function fileFilter (req, file, cb) {
   
 }
 
-const upload = multer({ storage: storage, fileFilter: fileFilter, limits:{fileSize: 2*1024*1024} })
+const upload = multer({ dest: 'uploads/', storage: storage, fileFilter: fileFilter, limits:{fileSize: 2*1024*1024} })
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

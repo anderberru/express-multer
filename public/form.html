@@ -13,9 +13,9 @@
                 console.log(name)
                 let file = document.getElementById("file").files[0]
                 console.log(file)
-                const formData  = new FormData();
-                formData.append('avatar', file);
-                formData.append('name', name);
+                const formData  = new FormData(document.forms.namedItem("formularioa"));
+                //formData.append('avatar', file);
+                //formData.append('name', name);
 
                 fetch('/profile', {
                 method: 'POST',
@@ -31,7 +31,7 @@
     </script>
 </head>
 <body>
-<form  id="formu" action="/profile" method="post" enctype="multipart/form-data">
+<form  id="formu"  name="formularioa">
     Izena: <input type="text" id="name" name="name" placeholder="Sartu zure izena"> <br>
     <input id="file" type="file" name="avatar"/>
     <input type="submit">
